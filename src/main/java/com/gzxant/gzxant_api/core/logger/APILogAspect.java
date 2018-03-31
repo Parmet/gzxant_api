@@ -1,5 +1,9 @@
 package com.gzxant.gzxant_api.core.logger;
 
+import java.util.Arrays;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -7,31 +11,29 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-
 /**
  * WEB层日志切面,用来记录请求信息
+ * 
+ * @author xiaoyc
+ * @since 2018-3-31
  */
 @Aspect
-@Order(5)
 @Component
-public class WebLogAspect {
+public class APILogAspect {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebLogAspect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(APILogAspect.class);
 
     ThreadLocal<Long> startTime = new ThreadLocal<>();
 
-    @Pointcut("execution(public * priv.jesse.mall.controller.*.*(..))")//切入点
-    public void webLog() {
+    @Pointcut("execution(public * com.gzxant.gzxant_api.business..controller.*.*(..))")//切入点
+    public void APILog() {
     }
 
-    @Before("webLog()")
+    @Before("APILog()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
         startTime.set(System.currentTimeMillis());
 
@@ -48,7 +50,7 @@ public class WebLogAspect {
         LOGGER.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
     }
 
-    @AfterReturning(returning = "ret", pointcut = "webLog()")
+    @AfterReturning(returning = "ret", pointcut = "APILog()")
     public void doAfterReturning(Object ret) throws Throwable {
         // 处理完请求，返回内容
         LOGGER.info("RESPONSE : " + ret);
@@ -58,4 +60,3 @@ public class WebLogAspect {
 
 
 }
-

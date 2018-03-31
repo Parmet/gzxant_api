@@ -19,8 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * 权限拦截器
  *
- * @author hfb
- * @date 2017/9/18
+ * @author xiaoyc
+ * @since 2018-3-31
  */
 @WebFilter
 public class AuthorizationFilter implements Filter {
@@ -47,17 +47,19 @@ public class AuthorizationFilter implements Filter {
             return;
         }
         
-        //除了拦截login.html 其他html都拦截
         StringBuffer url = request.getRequestURL();
-        //System.out.println(url);
         String path = url.toString();
         // 只拦截这些类型请求
-        if (path.endsWith(".html")) {
-            processAccessControl(request, response, chain);
+        if (path.endsWith(".ant")) {
+//        	processAccessControl(request, response, chain);
+//        	path = path.substring(0, url.length() - 4);
+//        	request.getRequestDispatcher(path).forward(request, response);
+        	chain.doFilter(request, response);
         } else {
             //其他静态资源都不拦截
             chain.doFilter(request, response);
         }
+        
     }
 
     /**
@@ -67,24 +69,12 @@ public class AuthorizationFilter implements Filter {
      * @throws IOException
      * @throws ServletException
      */
-    private void processAccessControl(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        Object adminUser = request.getSession().getAttribute("login_user");
-        Object user = request.getSession().getAttribute("user");
-        String url = request.getRequestURL().toString();
-        if (url.indexOf("admin") != -1){
-            if (adminUser == null) {
-                response.sendRedirect("/mall/admin/toLogin.html");
-            }else {
-                chain.doFilter(request, response);
-            }
-        }else {
-            if (user == null) {
-                response.sendRedirect("/mall/user/toLogin.html");
-            }else {
-                chain.doFilter(request, response);
-            }
-        }
-    }
+//    private void processAccessControl(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+//        Object adminUser = request.getSession().getAttribute("login_user");
+//        Object user = request.getSession().getAttribute("user");
+//        String url = request.getRequestURL().toString();
+//    	
+//    }
 
     @Override
     public void destroy() {

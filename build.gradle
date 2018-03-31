@@ -25,15 +25,17 @@ repositories {
 
 
 dependencies {
-	compile('com.ibeetl:beetl')
-	compile('com.ibeetl:beetlsql')
+	compile('com.ibeetl:beetl:2.7.27')
+	compile('com.ibeetl:beetlsql:2.10.14')
 	compile('com.alibaba:fastjson:1.2.19')
 	compile('org.springframework.boot:spring-boot-starter-data-redis')
-	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.boot:spring-boot-starter-data-rest')
+	//compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-validation')
 	compile('org.springframework.boot:spring-boot-starter-web-services')
 	runtime('org.springframework.boot:spring-boot-devtools')
 	compile('org.aspectj:aspectjrt')
+	compile('org.aspectj:aspectjweaver')
 	compile('org.apache.commons:commons-lang3')
 	compile('org.apache.httpcomponents:httpclient')
 	compile('org.bouncycastle:bcprov-jdk15:1.46')

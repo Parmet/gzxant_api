@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author hfb
  * @date 2017/9/18
  */
-public class ResultBean<T> implements Serializable {
+public class R implements Serializable {
     private static final long serialVersionUID = -6248298306422072592L;
     /**
      * 表示接口调用成功
@@ -23,23 +23,23 @@ public class ResultBean<T> implements Serializable {
      */
     public static final int NO_PERMISSION = 2;
 
-    public static final String NO_LOGIN_MSG = "老铁，这是需要登陆的！";
-    public static final String NO_PERMISSION_MSG = "不许碰我！";
-    public static final String SUCC_MSG = "看到了吧！";
-    public static final String FAIL_MSG = "我现在不行，有点忙！";
+    public static final String NO_LOGIN_MSG = "请登录！";
+    public static final String NO_PERMISSION_MSG = "没有权限！";
+    public static final String SUCC_MSG = "操作成功！";
+    public static final String FAIL_MSG = "操作失败！";
 
     private String message = SUCC_MSG;
     private int state = SUCCESS;
     /**
      * 返回的数据
      */
-    private T data;
+    private Object data;
 
-    public ResultBean() {
+    public R() {
         super();
     }
 
-    public ResultBean(T data) {
+    public R(Object data) {
         super();
         this.data = data;
     }
@@ -49,13 +49,13 @@ public class ResultBean<T> implements Serializable {
      *
      * @param e
      */
-    public ResultBean(Throwable e) {
+    public R(Throwable e) {
         super();
         this.message = e.getMessage();
         this.state = FAIL;
     }
 
-    public ResultBean(String message) {
+    public R(String message) {
         super();
         this.message = message;
         this.state = FAIL;
@@ -77,17 +77,17 @@ public class ResultBean<T> implements Serializable {
         this.state = state;
     }
 
-    public T getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(Object data) {
         this.data = data;
     }
 
     @Override
     public String toString() {
-        return "ResultBean{" +
+        return "Result{" +
                 "message='" + message + '\'' +
                 ", state=" + state +
                 ", data=" + data +
