@@ -82,7 +82,6 @@ public class XmlUtil {
          * @param map  
          * @return  
          */  
-        @SuppressWarnings({ "unchecked" })  
         private static Map<String, Object> recGetXmlElementValue(Element ele, Map<String, Object> map){  
             List<Element> eleList = ele.elements();  
             if (eleList.size() == 0) {  
